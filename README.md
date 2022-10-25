@@ -6,11 +6,11 @@ This repo contains the completed homework done by [@0xsenzel](https://github.com
 |Weeks| Link|
 |----|----|
 |#1| [week1](./week1/)|
-|#2| [week2](./week1/)|
-|#3| [week3](./week1/)|
-|#4| [week4](./week1/)|
-|#5| [week5](./week1/)|
-|#6| [week6](./week1/)|
-|#7| [week7](./week1/)|
-|#8| [week8](./week1/)|
+|#2| [week2](./week2/)|
+|#3| [week3](./week3/)|
+|#4| [week4](./week4/)|
+|#5| [week5](./week5/)|
+|#6| [week6](./week6/)|
+|#7| [week7](./week7/)|
+|#8| [week8](./week8/)|
 
