@@ -1,6 +1,6 @@
 # Solution
 ## Homework 1
-Solution: [Thinking Map](./answer/Ans-Homework_1-Q1.PNG) <br/>
+Solution: [Thinking Map](./answers/Ans-Homework_1-Q1.PNG) <br/>
 
 ## Homework 2
 ### 1.1 <br/>
@@ -58,10 +58,10 @@ Account: <br/>
 This account is a blackhole which means token that is sent to this address will never able to be retrieved by anyone. One of the use case is inflationary control such as in [EIP-1559](https://www.immunebytes.com/blog/eip-1559/).
 
 ### 4.1 & 4.2 <br/>
-Solution: [Deployment of Contract @ Remix IDE](./answer/Ans-Homework_2-Q4.PNG)
+Solution: [Deployment of Contract @ Remix IDE](./answers/Ans-Homework_2-Q4.PNG)
 
 ## Homework 3
-Solution: [Bootcamp.sol](./answer/Bootcamp.sol)
+Solution: [Bootcamp.sol](./answers/Bootcamp.sol)
 
 ## Homework 4
-Solution: [VolcanoCoin.sol](./answer/VolcanoCoin.sol)
+Solution: [VolcanoCoin.sol](./answers/VolcanoCoin.sol)
