@@ -11,6 +11,7 @@ contract VolcanoCoin is Ownable {
         uint256 amount;
         address recipient;
     }
+    //Payment[] payment;
 
     mapping(address => uint256) balances;
     mapping(address => Payment[]) paymentDetails;
@@ -46,12 +47,13 @@ contract VolcanoCoin is Ownable {
         require(fromBalance - balances[msg.sender] <= _amount, "Sender amount hasn't been deducted!");
         balances[to] += _amount;      
 
-        paymentDetails[msg.sender].push(Payment(_amount, to));
+        //paymentDetails[msg.sender].push(Payment(_amount, to));
+        recordPayment(msg.sender, to, _amount);
 
         emit TokenTransferred(to, _amount);
     }
 
-    function getPaymentDetails(address _sender) public view returns(Payment[] memory) {
-        return paymentDetails[_sender];
+    function recordPayment(address _sender, address receiver, uint256 amount) internal {
+        paymentDetails[_sender].push(Payment(amount, receiver));
     }
 }
