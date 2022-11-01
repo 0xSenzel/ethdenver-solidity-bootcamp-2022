@@ -3,16 +3,18 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-contract VolcanoNFT is ERC721 {
-    constructor() ERC721 ("Volcano", "VOL")  {
+contract VolcanoNFT is ERC721("Volcano", "VOL") {
+    uint256 tokenId;
+    constructor() {
 
     }
 
-    function mint(address to, uint256 tokenId) internal {
-        _mint(to, tokenId);
+    function mint() public {
+        _safeMint(msg.sender, tokenId);
+        tokenId++;
     }
 
-    function transfer(address from, address to, uint256 tokenId) internal {
-        _transfer(from, to, tokenId);
+    function transfer(address to, uint256 _tokenId) public {
+        _transfer(msg.sender, to, _tokenId);
     }
 }
