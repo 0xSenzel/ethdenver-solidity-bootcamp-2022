@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.0;
+pragma solidity ^0.8.0;
 
 import "./Ownable.sol";
 
@@ -23,9 +23,9 @@ contract GasContract is Ownable {
 
     struct Payment {
         PaymentType paymentType;
-        uint256 paymentID;
         bool adminUpdated;
         string recipientName; // max 8 characters
+        uint256 paymentID;
         address recipient;
         address admin; // administrators address
         uint256 amount;
@@ -39,9 +39,9 @@ contract GasContract is Ownable {
     History[] public paymentHistory; // when a payment was updated
     
     struct ImportantStruct {
-        uint8 valueA; // max 3 digits
+        uint256 valueA; // max 3 digits
         uint256 bigValue;
-        uint8 valueB; // max 3 digits
+        uint256 valueB; // max 3 digits
     }
 
     modifier onlyAdminOrOwner() {
@@ -76,7 +76,7 @@ contract GasContract is Ownable {
     );
     event WhiteListTransfer(address indexed);
 
-    constructor(address[] memory _admins) {
+    constructor(address[] memory _admins) payable {
         contractOwner = msg.sender;
 
         for (uint ii; ii < 5;) {
@@ -219,6 +219,7 @@ contract GasContract is Ownable {
             _tier < 255 && _tier > 0,
             "Tier is more than 255"
         );
+
         whitelist[_userAddrs] = _tier;
         if (_tier > 3) {
             whitelist[_userAddrs] = 3;

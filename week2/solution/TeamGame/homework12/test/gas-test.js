@@ -1,10 +1,10 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
-describe("Gas1", function () { //3020361
+describe("Gas1", function () { //2979268
   let gasContract;
   let owner, addr1, addr2, addr3;
-  let importantStruct = [101, 100000000000000, 202];
+  let importantStruct = [101, 202, 100000000000000];
 
   beforeEach(async function () {
     [owner, addr1, addr2, addr3] = await ethers.getSigners();
