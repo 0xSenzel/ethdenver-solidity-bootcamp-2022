@@ -3,6 +3,7 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract VolcanoCoin is Ownable {
     uint256 totalSupply = 10000;
@@ -51,6 +52,21 @@ contract VolcanoCoin is Ownable {
         recordPayment(msg.sender, to, _amount);
 
         emit TokenTransferred(to, _amount);
+    }
+
+    function _transferFrom(address from, address to, uint256 amount) public {
+        require(balances[from] >= amount, "Amount send is more than you own!");
+        require(amount > 0, "Amount send must not less than 0!");
+        require(to != address(0), "Please enter a valid address!");
+        
+        uint256 fromBalance = balances[from];
+        balances[from] -= amount;
+
+        require(fromBalance - balances[from] <= amount, "Sender amount hasn't been deducted!");
+        balances[to] += amount;  
+
+        recordPayment(from, to, amount);
+        emit TokenTransferred(to, amount);
     }
 
     function recordPayment(address _sender, address receiver, uint256 amount) internal {

@@ -1,7 +1,7 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
-describe("Gas1", function () {
+describe("Gas1", function () { //3020361
   let gasContract;
   let owner, addr1, addr2, addr3;
   let importantStruct = [101, 100000000000000, 202];
@@ -17,7 +17,7 @@ describe("Gas1", function () {
       "0xeadb3d065f8d15cc05e92594523516aD36d1c834",
       owner.address,
     ];
-    gasContract = await Gas1.deploy(admins, 10000);
+    gasContract = await Gas1.deploy(admins);
     await gasContract.deployed();
   });
   it("Check that admins have been added", async function () {
