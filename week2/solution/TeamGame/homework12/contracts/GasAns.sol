@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.17;
 
-contract GasContractAns { // 828852
+contract GasContract {
     address[5] public administrators;
     uint256 public immutable totalSupply; // cannot be updated
 
@@ -23,7 +23,7 @@ contract GasContractAns { // 828852
     function transfer(address _recipient, uint256 _amount, string calldata _name) external {
         payments[msg.sender].push(Payment(1, _amount));
         unchecked {
-            balances[_recipient] += _amount;
+        balances[_recipient] += _amount;
         }
         emit Transfer(_recipient, _amount);
     }
@@ -37,7 +37,7 @@ contract GasContractAns { // 828852
         payments[_user][0].amount = _amount;
     }
 
-    function getPayments(address _user) external view returns (Payment[] memory payments_) {
+    function getPayments(address _user) external view returns (Payment[] memory) {
         return payments[_user];
     }
 
@@ -45,16 +45,15 @@ contract GasContractAns { // 828852
         return true;
     }
 
-    function addToWhitelist(address _user, uint256 _tier) external {
-        whitelist[_user] = _tier;
+    function addToWhitelist(address _userAddrs, uint256 _tier) external {
+        whitelist[_userAddrs] = _tier;
     }
 
-    function whiteTransfer(address _recipient, uint256 _amount, Payment calldata) public {
+    function whiteTransfer(address _recipient, uint256 _amount, Payment calldata _struct) external {
         unchecked {
-            uint256 temp = _amount - whitelist[msg.sender];
-            balances[msg.sender] -= temp; 
-            balances[_recipient] += temp;
+        uint256 temp = _amount - whitelist[msg.sender];
+        balances[msg.sender] -= temp;
+        balances[_recipient] += temp;
         }
     }
-
 }
