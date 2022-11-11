@@ -10,7 +10,7 @@ interface IVolcanoCoin {
     function _transferFrom(address from, address to, uint256 amount) external;
 }
 
-contract VolcanoNFT is ERC721("Volcano", "VOL"), Ownable {
+contract VolcanoNFT is ERC721URIStorage, Ownable {
     // Tracking tokenId of latest NFT to be minted
     uint256 tokenId;
 
@@ -18,15 +18,21 @@ contract VolcanoNFT is ERC721("Volcano", "VOL"), Ownable {
     // Price in VolcanoCoin to mint
     uint256 constant MINT_PRICE = 1;
 
-    constructor(address tokenAddress) {
+    string[] memes = [
+        "ipfs://bafkreifok2ntbcib5r6axgh25viuipz2d2b5nft3qczuwb5zpr6evb4qba"
+    ];
+
+    constructor(address tokenAddress) ERC721("Volcano", "VOL") {
         volcanoCoin = IVolcanoCoin(tokenAddress);
     }
 
-    function mint() public payable {
+    function mint() public {
         // transfer VolcanoCoin from msg.sender to this vault
         volcanoCoin._transferFrom(msg.sender, address(this), MINT_PRICE);
         _safeMint(msg.sender, tokenId);
-        tokenURI(tokenId);
+
+        string memory defaultURI = memes[0];
+        _setTokenURI(tokenId, defaultURI);
         tokenId++;
     }
 
@@ -34,9 +40,9 @@ contract VolcanoNFT is ERC721("Volcano", "VOL"), Ownable {
         _transfer(msg.sender, to, _tokenId);
     }
 
-    function setTokenURI(uint256 _tokenId, string memory _tokenURI) internal view {
-        _requireMinted(tokenId);
-        tokenURI(_tokenId);
+    function setTokenURI(uint256 _tokenId, string memory _tokenURI) public {
+        _requireMinted(_tokenId);
+        _setTokenURI(_tokenId, _tokenURI);
     }
 
     receive() external payable  { }
