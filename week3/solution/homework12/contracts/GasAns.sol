@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.17;
 
-contract GasContract {
+contract GasContractAns {
     address[5] public administrators;
     uint256 public immutable totalSupply; // cannot be updated
 
