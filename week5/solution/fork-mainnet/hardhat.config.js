@@ -1,5 +1,4 @@
-
- require("dotenv").config();
+require("dotenv").config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -7,7 +6,7 @@ module.exports = {
   defaultNetwork: "hardhat",
   networks: {
     hardhat: {
-      chainId: 1,
+      chainId: 31337,
       forking: {
         url: process.env.MAINNET_RPC_URL,
       },
