@@ -40,7 +40,7 @@ contract VolcanoNFT is ERC721URIStorage, Ownable {
         _transfer(msg.sender, to, _tokenId);
     }
 
-    function setTokenURI(uint256 _tokenId, string memory _tokenURI) public {
+    function setTokenURI(uint256 _tokenId, string memory _tokenURI) public onlyOwner {
         _requireMinted(_tokenId);
         _setTokenURI(_tokenId, _tokenURI);
     }
