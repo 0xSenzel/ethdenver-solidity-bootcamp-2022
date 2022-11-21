@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
 
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
 // Uncomment this line to use console.log
 import "hardhat/console.sol";
 
@@ -11,13 +13,19 @@ import "hardhat/console.sol";
  * @notice  . You can use this contract to deploy a shamecoin
  */
 
-contract ShameCoin {
+contract ShameCoin is ERC20 {
     address public owner;
+    uint8 decimal;
 
     mapping(address => uint256) public balances;
     mapping(address => bool) approved;
-    constructor(address _owner) {
+    constructor(address _owner) ERC20("SHAMECOIN", "SHAME") {
         owner = _owner;
+
+    }
+
+    function decimals() public view virtual override returns(uint8) {
+        return decimal;
     }
 
     /**
