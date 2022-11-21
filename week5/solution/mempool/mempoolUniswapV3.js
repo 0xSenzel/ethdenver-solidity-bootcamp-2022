@@ -12,7 +12,10 @@ async function main() {
     const tx = await provider.getTransaction(txHash);
 
     try {
-      if (tx != null && tx.to == uniswapRouterV3Address) {
+      if (
+        (tx != null && tx.to == uniswapRouterV3Address) ||
+        (tx != null && tx.from == uniswapRouterV3Address)
+      ) {
         console.log("Its Uniswap!");
         console.log(tx);
       }
