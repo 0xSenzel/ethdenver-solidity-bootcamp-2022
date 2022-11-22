@@ -105,7 +105,7 @@ contract ShameCoin {
         } else if(msg.sender != owner) {
             _balance[owner] -= 1;
 
-            _balance[_from] += 1; 
+            _balance[msg.sender] += 1; 
         }
     }
 
