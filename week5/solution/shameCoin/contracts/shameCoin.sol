@@ -97,11 +97,11 @@ contract ShameCoin {
                 _allowances[_from][owner] -= 1;
 
                 _balance[_to] += 1;
-            }
-            _balance[owner] -= 1;
+            } else {
+                _balance[owner] -= 1;
 
-            _balance[_to] += 1;
-            
+                _balance[_to] += 1;
+            }
         } else if(msg.sender != owner) {
             _balance[owner] -= 1;
 

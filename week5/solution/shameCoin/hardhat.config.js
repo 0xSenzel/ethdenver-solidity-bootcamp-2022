@@ -1,5 +1,6 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("solidity-docgen"); // `npx hardhat docgen` to generate documentation
+require("@nomicfoundation/hardhat-chai-matchers");
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
