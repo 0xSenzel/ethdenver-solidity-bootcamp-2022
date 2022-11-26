@@ -19,6 +19,9 @@ const DAI = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
 const USDC = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48";
 const BUSD = "0x4Fabb145d64652a948d72533023f6E7A623C7C53";
 const BINANCE_ADDRESS = "0xDFd5293D8e347dFe59E90eFd55b2956a1343963d";
+const POOL_FEE_500 = 500;
+const POOL_FEE_3000 = 3000;
+const POOL_FEE_10000 = 10000;
 
 const getBalance = async (dai, usdc, busd) => {
   binanceDAIBalance = ethers.utils.formatUnits(
@@ -85,19 +88,20 @@ async function main() {
 
   const swapDAIToUSDC = await swapDAI
     .connect(binance)
-    .swapExactInputSingle(amountIn, DAI, USDC, { gasLimit: 300000 });
+    .swapExactInputSingle(amountIn, DAI, USDC, POOL_FEE_3000, {
+      gasLimit: 300000,
+    });
   swapDAIToUSDC.wait();
 
   await getBalance(dai, usdc, busd);
-  //await getApproval(dai, usdc, busd, binance, swapDAI);
 
   /* Execute the swap DAI to BUSD */
-  /* console.log("\nswapping DAI to BUSD...");
-  const amountIn = ethers.utils.parseUnits("10");
-  const allowance = await busd
+  console.log("\nswapping DAI to BUSD...");
+  const amountIn2 = ethers.utils.parseUnits("10");
+  const allowance2 = await busd
     .connect(binance)
     .allowance(BINANCE_ADDRESS, swapDAI.address);
-  console.log("allowance:", allowance.toString()); */
+  console.log("allowance:", allowance2.toString());
 
   /*
    * Implement with Javascript calling UniswapV3Router directly
@@ -125,13 +129,14 @@ async function main() {
   /*
    * Implement with smart contracts
    */
-  /* const swapBUSDToDAI = await swapDAI
+  const swapDAIToBUSD = await swapDAI
     .connect(binance)
-    .swapExactInputSingle(amountIn, DAI, BUSD, { gasLimit: 300000 });
-  swapBUSDToDAI.wait();
-  await getRevertReason(swapBUSDToDAI);
+    .swapExactInputSingle(amountIn, DAI, BUSD, POOL_FEE_500, {
+      gasLimit: 300000,
+    });
+  swapDAIToBUSD.wait();
 
-  await getBalance(dai, usdc, busd); */
+  await getBalance(dai, usdc, busd);
 }
 
 main()
