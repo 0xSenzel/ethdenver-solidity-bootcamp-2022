@@ -4,7 +4,13 @@ require("@nomicfoundation/hardhat-chai-matchers");
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  solidity: "0.8.17",
+  solidity: {
+    compilers: [
+      {
+        version: "0.7.6",
+      },
+    ],
+  },
   defaultNetwork: "hardhat",
   networks: {
     hardhat: {
@@ -13,5 +19,5 @@ module.exports = {
         url: process.env.MAINNET_RPC_URL,
       },
     },
-  }
+  },
 };
