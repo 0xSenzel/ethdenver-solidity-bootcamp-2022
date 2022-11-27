@@ -1,18 +1,17 @@
 const { ethers } = require("hardhat");
-const { providers } = require("ethers");
 // Libraries that supports balanceOf, approve
 const IERC20Minimal = require("@uniswap/v3-core/artifacts/contracts/interfaces/IERC20Minimal.sol/IERC20Minimal.json");
 
-const SwapRouterABI = require("@uniswap/v3-periphery/artifacts/contracts/interfaces/ISwapRouter.sol/ISwapRouter.json");
+// const SwapRouterABI = require("@uniswap/v3-periphery/artifacts/contracts/interfaces/ISwapRouter.sol/ISwapRouter.json");
 
-const ercAbi = [
-  // Read-Only Functions
-  "function balanceOf(address _addr) public view returns (uint256)",
-  // Authenticated Functions
-  "function unpause() public onlyOwner",
-  "function approve(address _spender, uint256 _value) public whenNotPaused returns (bool)",
-  "function pause() public onlyOwner",
-];
+// const ercAbi = [
+//   // Read-Only Functions
+//   "function balanceOf(address _addr) public view returns (uint256)",
+//   // Authenticated Functions
+//   "function unpause() public onlyOwner",
+//   "function approve(address _spender, uint256 _value) public whenNotPaused returns (bool)",
+//   "function pause() public onlyOwner",
+// ];
 
 const UniswapV3Router = "0xE592427A0AEce92De3Edee1F18E0157C05861564";
 const DAI = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
