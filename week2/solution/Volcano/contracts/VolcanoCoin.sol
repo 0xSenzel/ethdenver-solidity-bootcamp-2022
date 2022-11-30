@@ -3,10 +3,18 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "https://github.com/Arachnid/solidity-stringutils/blob/master/src/strings.sol";
 
 contract VolcanoCoin is Ownable {
-    uint256 totalSupply = 10000;
+    using strings for *;
+
+    uint8 decimal;
+    uint256 totalSupply;
+    uint256 mintableSupply;
+    uint256 immutable PRICE= 0.001 ether;
+
+    string private _name;
+    string private _symbol;
 
     struct Payment {
         uint256 amount;
@@ -21,15 +29,28 @@ contract VolcanoCoin is Ownable {
     event TokenTransferred(address, uint256);
 
     constructor() {
-        balances[owner()] = totalSupply;
+        _name = "VolcanoCoin";
+        _symbol = "VOL";
+        totalSupply = 10000;
+        mintableSupply = 10000;
     }
 
-    function getTotalSupply() public view returns(uint256) {
+    function getTotalSupply() external view returns(uint256) {
         return totalSupply;
     }
 
-    function addSupply() public onlyOwner {
+    function name() external view returns(string memory) {
+        return _name;
+    }
+
+    function symbol() external view returns(string memory) {
+        return _symbol;
+    }
+
+    function addSupply() external onlyOwner {
         totalSupply += 1000;
+        mintableSupply +=1000;
+
         emit TokenSupplyChange(totalSupply);
     }
 
@@ -37,12 +58,25 @@ contract VolcanoCoin is Ownable {
         return balances[user];
     }
 
-    function _transfer(address payable to, uint256 _amount) external payable {
+    function mint(uint256 amount) external payable {
+        require(totalSupply - amount > 0, "Reached Max Supply");
+        require(mintableSupply >= amount, "Lower mint amount");
+        uint256 cost = PRICE * amount;
+        (bool sent,) = payable(msg.sender).call{value: cost}("");
+        require(sent, "Failed to send Ether");
+
+        mintableSupply -= amount;
+        balances[msg.sender] += amount;
+
+        emit TokenTransferred(msg.sender, amount);
+    }
+
+    function transfer(address to, uint256 _amount) external {
         require(balances[msg.sender] >= _amount, "Amount send is more than you own!");
         require(_amount > 0, "Amount send must not less than 0!");
         require(to != address(0), "Please enter a valid address!");
 
-        uint256 fromBalance = balances[payable(msg.sender)];
+        uint256 fromBalance = balances[msg.sender];
         balances[msg.sender] -= _amount;
 
         require(fromBalance - balances[msg.sender] <= _amount, "Sender amount hasn't been deducted!");
@@ -71,5 +105,10 @@ contract VolcanoCoin is Ownable {
 
     function recordPayment(address _sender, address receiver, uint256 amount) internal {
         paymentDetails[_sender].push(Payment(amount, receiver));
+    }
+
+    function interactWithStringUtils(string memory words) external pure returns (string memory) {
+        string memory output = words.toSlice().concat(" - From ETH Denver".toSlice());
+        return output;
     }
 }
