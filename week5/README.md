@@ -16,4 +16,9 @@ Run the file by using `node <FILE_NAME>.js`
 
 ## Homework 19
 
+Write a [shameCoin](./solution/shameCoin/contracts/shameCoin.sol) contract
+
 ## Homework 20
+
+- Write a [unit test](./solution/mempool/mempoolUniswapV3.js) to interact with Uniswap
+- [Unit test](./solution/fork-mainnet/test/testSwapDAI.js) to perform swap by impersonating Binance
